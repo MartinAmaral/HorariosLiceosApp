@@ -1,0 +1,91 @@
+﻿<Window x:Class="WpfApp1.IngresarMateriaWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp1"
+        mc:Ignorable="d" FontSize="20"
+        WindowStartupLocation="CenterScreen"
+        Title="Ingresar Materia" Height="600" Width="900">
+    <Grid AllowDrop="True" Background="Transparent">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="auto"></ColumnDefinition>
+            <ColumnDefinition Width="auto"></ColumnDefinition>
+            <ColumnDefinition Width="auto"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="20"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto" SharedSizeGroup="a"></RowDefinition>
+            <RowDefinition Height="auto" SharedSizeGroup="a"></RowDefinition>
+            <RowDefinition Height="auto" SharedSizeGroup="a"></RowDefinition>
+            <RowDefinition Height="auto" SharedSizeGroup="a"></RowDefinition>
+            <RowDefinition Height="auto" SharedSizeGroup="a"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="20"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="1" Grid.Column="1" FontSize="36" 
+                   Name="xTitle"
+                   HorizontalAlignment="Center" VerticalAlignment="Center"
+                   FontWeight="Bold" Grid.ColumnSpan="7"  
+                   Text="Ingrese Materia" Margin="0,0,0,20"  />
+
+        <TextBlock Grid.Row="2" Grid.Column="3" Text="Nombre de la materia:" Margin="0,0,20,0" ></TextBlock>
+        <TextBox HorizontalContentAlignment="Center" Name="nombreMateria" PreviewTextInput="ValidateMateriaName" Grid.Row="2" Grid.Column="4" Width="200" Margin="20,2,20,2"/>
+
+        <TextBlock Grid.Column="3" Grid.Row="3"  Text="Cantidad de horas por semana:" Margin="0,0,20,0" ></TextBlock>
+        <TextBox HorizontalContentAlignment="Center" Name="cantidadSemana" PreviewTextInput="ValidateSemana" Grid.Column="4" Grid.Row="3" Width="100" Margin="0,2,0,2" ></TextBox>
+
+        <TextBlock Grid.Column="3" Grid.Row="4" Text="Cantidad Minima por semana:" Margin="0,0,20,0"></TextBlock>
+        <TextBox HorizontalContentAlignment="Center" Name="cantidadMinima" PreviewTextInput="ValidateSemana" Grid.Column="4" Grid.Row="4" Width="100" Margin="0,2,0,2"  ></TextBox>
+
+        <TextBlock Grid.Column="3" Grid.Row="5"  Text="Cantidad Maxima por semana:" Margin="0,0,20,0" ></TextBlock>
+        <TextBox HorizontalContentAlignment="Center" Name="cantidadMaxima" PreviewTextInput="ValidateSemana"  Grid.Column="4" Grid.Row="5" Width="100" Margin="0,2,0,2" ></TextBox>
+
+        <TextBlock Grid.Column="3" Grid.Row="6" Text="Dias entre clase:" Margin="0,0,20,0" ></TextBlock>
+        <ComboBox HorizontalContentAlignment="Center" Name="diasEntreClaseComboBox" Grid.Column="4" Grid.Row="6" Width="100" Margin="0,2,0,2" ></ComboBox>
+
+        <Grid Grid.Column="2" Grid.ColumnSpan="5" Grid.Row="7" Name="calendar" Height=" 200" Margin="0,20,0,0" Background="Transparent" AllowDrop="True">
+            <Grid.Resources>
+                <Style x:Key="CellBorderStyle" TargetType="Border">
+                    <Setter Property="BorderBrush" Value="Black"/>
+                    <Setter Property="BorderThickness" Value="1"/>
+                </Style>
+            </Grid.Resources>
+
+            <Grid.RowDefinitions>
+                
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions >
+                <ColumnDefinition Width="*" ></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+
+        </Grid>
+
+        <Grid Grid.Column="2" Grid.ColumnSpan="5" Grid.Row="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Button Name="xAtrasButton" Grid.Column="1" Grid.Row="0" MaxHeight="50" Content="Atras" ></Button>
+            <Button Name="xCrearOrGuardarButton" IsEnabled="False" Grid.Column="3" Grid.Row="0" MaxHeight="50" Content="Crear" ></Button>
+        </Grid>
+    </Grid>
+</Window>

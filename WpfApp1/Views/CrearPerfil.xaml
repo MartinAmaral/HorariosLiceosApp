@@ -1,0 +1,55 @@
+﻿<Window x:Class="WpfApp1.Views.CrearPerfil"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp1.Views"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        FontSize="18"
+        Title="Crear Perfil" Height="450" Width="800">
+           
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width ="20"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width ="20"></ColumnDefinition>
+
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20" ></RowDefinition>
+            <RowDefinition Height="auto" ></RowDefinition>
+            <RowDefinition Height= "auto" ></RowDefinition>
+            <RowDefinition Height="auto" ></RowDefinition>
+            <RowDefinition Height="auto" ></RowDefinition>
+            <RowDefinition Height="20" ></RowDefinition>
+            <RowDefinition Height="*" ></RowDefinition>
+            <RowDefinition Height="*" ></RowDefinition>
+            <RowDefinition Height="*" ></RowDefinition>
+            <RowDefinition Height="20" ></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="1" Grid.Column="1" FontSize="26" Grid.ColumnSpan="9" Text="Crear Perfil" HorizontalAlignment="Center"></TextBlock>
+
+        <TextBlock Grid.Row="2" Grid.Column="3" Text="Ingrese el nombre del Perfil" Grid.ColumnSpan="3"></TextBlock>
+        <TextBox Name="xnombrePerfilTextBox" Grid.Row="2" Grid.Column="6"></TextBox>
+        
+        <TextBlock Grid.Row="3" Grid.Column="3" Text="Estructura de dias" Grid.ColumnSpan="3"></TextBlock>
+        <Button Name="xCantidadDiasButton" Grid.Row="3" Grid.Column="6"></Button>
+
+        <TextBlock Grid.Row="4" Grid.Column="3" Text="Estructura de horas" Grid.ColumnSpan="3"></TextBlock>
+        <Button Name="xCantidadHorasButton"  Grid.Row="4" Grid.Column="6"></Button>
+
+        <Button Name="XAtrasButton" Grid.Column="3" Grid.Row="8" Content="Atras"></Button>
+        <Button Name="xGuardarButton" Grid.Column="6" Grid.Row="8" Content="Guardar" IsEnabled="False"></Button>
+        
+    </Grid>
+</Window>
