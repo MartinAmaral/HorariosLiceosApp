@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace WpfApp1
+namespace BackEnd
 {
-    public class AddClaseModelView : ObservableObject
+    public interface ICondition
     {
-
-
+        public bool MetCondition(List<List<byte>> semana);
     }
 }

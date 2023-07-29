@@ -35,10 +35,10 @@
         </Grid.RowDefinitions>
         
         
+        <TextBlock Text="Analizando..." TextAlignment="Center" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="4" FontSize="16" Name="xMessage" ></TextBlock>
         
-        <ProgressBar Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="6" Name="xLoadingBar" Value="0" Minimum="0" Maximum="100" VerticalAlignment="Center" HorizontalAlignment="Center" Width="200" />
+        <ProgressBar VerticalAlignment="Top" MinHeight="10" Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="6" Name="xLoadingBar" Value="0" Minimum="0" Maximum="100"  HorizontalAlignment="Center" Width="200" />
 
-        <TextBlock Grid.Row="7" Grid.Column="3" Grid.ColumnSpan="4" FontSize="16" Name="xMessage" ></TextBlock>
-        
+        <Button Name="xCancelarOkButton" MaxWidth="125" MaxHeight="30" Content="Cancelar" Grid.Column="4" Grid.Row="7" Grid.ColumnSpan="2"  ></Button>
     </Grid>
 </Window>

@@ -22,7 +22,7 @@ namespace WpfApp1
     public partial class IngresarMateriaWindow : Window
     {
         private bool _mousePressed = false;
-        private Schema _semana;
+        private Profile _semana;
         private Style _cellBorderStyle;
         private List<Border> _borderList = new ();
         private bool yaCreada=false;
@@ -59,7 +59,7 @@ namespace WpfApp1
                 Title = "Ingresar Materia";
             }
 
-            _semana = DataManager.currentSchema;
+            _semana = DataManager.CurrentProfile;
 
             diasEntreClaseComboBox.Items.Clear();
             for (byte i = 0; i < _semana.daysName.Count; i++)
@@ -248,7 +248,7 @@ namespace WpfApp1
         private void GuardarMateria()
         {
             var horarios = new List<List<byte>>();
-            foreach (var b in DataManager.currentSchema.daysName)
+            foreach (var b in DataManager.CurrentProfile.daysName)
             {
                 horarios.Add(new List<byte>());
             }
@@ -276,7 +276,7 @@ namespace WpfApp1
         private void CrearMateria()
         {
             var horarios = new List<List<byte>>();
-            foreach (var b in DataManager.currentSchema.daysName)
+            foreach (var b in DataManager.CurrentProfile.daysName)
             {
                 horarios.Add(new List<byte>());
             }
@@ -304,13 +304,13 @@ namespace WpfApp1
         {
             var textBox = (TextBox)sender;
 
-            Helper.ValidarTexto(textBox, e, 10);
+            InputValidator.ValidarTexto(textBox, e, 10);
         }
 
         private void ValidateSemana(object sender, TextCompositionEventArgs e)
         {
             var textBox = (TextBox)sender;
-            Helper.ValidarNumero(textBox, e, 26, 0);
+            InputValidator.ValidarNumero(textBox, e, 26, 0);
         }
 
         private void CheckIfCanCreate(object sender, EventArgs e)

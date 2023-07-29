@@ -7,18 +7,18 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         FontSize="18"
-        Title="Crear Perfil" Height="450" Width="800">
+        Title="Crear Perfil" Height="450" Width="600">
            
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width ="20"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="0*"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
-            <ColumnDefinition Width="*"></ColumnDefinition>
-            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="0*"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
             <ColumnDefinition Width ="20"></ColumnDefinition>
 
@@ -27,29 +27,76 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="20" ></RowDefinition>
             <RowDefinition Height="auto" ></RowDefinition>
-            <RowDefinition Height= "auto" ></RowDefinition>
-            <RowDefinition Height="auto" ></RowDefinition>
-            <RowDefinition Height="auto" ></RowDefinition>
-            <RowDefinition Height="20" ></RowDefinition>
+            <RowDefinition Height="*" ></RowDefinition>
+            <RowDefinition Height="*" ></RowDefinition>
+            <RowDefinition Height="*" ></RowDefinition>
             <RowDefinition Height="*" ></RowDefinition>
             <RowDefinition Height="*" ></RowDefinition>
             <RowDefinition Height="*" ></RowDefinition>
             <RowDefinition Height="20" ></RowDefinition>
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="1" Grid.Column="1" FontSize="26" Grid.ColumnSpan="9" Text="Crear Perfil" HorizontalAlignment="Center"></TextBlock>
+        <TextBlock Grid.Row="1" Grid.Column="1" FontSize="26" Grid.ColumnSpan="9" Text="Crear Perfil" HorizontalAlignment="Center" FontWeight="Bold"></TextBlock>
 
-        <TextBlock Grid.Row="2" Grid.Column="3" Text="Ingrese el nombre del Perfil" Grid.ColumnSpan="3"></TextBlock>
-        <TextBox Name="xnombrePerfilTextBox" Grid.Row="2" Grid.Column="6"></TextBox>
-        
-        <TextBlock Grid.Row="3" Grid.Column="3" Text="Estructura de dias" Grid.ColumnSpan="3"></TextBlock>
-        <Button Name="xCantidadDiasButton" Grid.Row="3" Grid.Column="6"></Button>
+        <Grid Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="4" Grid.RowSpan="3">
+    
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="4" Grid.Column="3" Text="Estructura de horas" Grid.ColumnSpan="3"></TextBlock>
-        <Button Name="xCantidadHorasButton"  Grid.Row="4" Grid.Column="6"></Button>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition Height="auto "></RowDefinition>
+                    <RowDefinition></RowDefinition>
 
-        <Button Name="XAtrasButton" Grid.Column="3" Grid.Row="8" Content="Atras"></Button>
-        <Button Name="xGuardarButton" Grid.Column="6" Grid.Row="8" Content="Guardar" IsEnabled="False"></Button>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Grid.Row="1" Text="Ingrese el nombre"></TextBlock>
+                <TextBox Name="xnombrePerfilTextBox" TextAlignment="Center" MaxWidth="125" Grid.Column="1" Grid.Row="1" Margin="10,0,10,0" ></TextBox>
+            </Grid>
+
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition Height="auto "></RowDefinition>
+                    <RowDefinition></RowDefinition>
+
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Estructura de dias" Grid.ColumnSpan="3"></TextBlock>
+                <Button Name="xCantidadDiasButton" Grid.Row="1" Grid.Column="1" MaxWidth="125"></Button>
+
+            </Grid>
+
+            <Grid Grid.Row="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition Height="auto "></RowDefinition>
+                    <RowDefinition></RowDefinition>
+
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Estructura de horas" Grid.ColumnSpan="3"></TextBlock>
+                <Button Name="xCantidadHorasButton"  Grid.Row="1" Grid.Column="1" Width="125" MaxHeight="40" MaxWidth="125"></Button>
+            </Grid>
+        </Grid>
+        <Button MaxHeight="40" Name="XAtrasButton" Grid.Column="3" Grid.Row="7" Content="Atras"></Button>
+        <Button MaxHeight="40" Name="xGuardarButton" Grid.Column="6" Grid.Row="7" Content="Guardar" IsEnabled="False"></Button>
         
     </Grid>
 </Window>

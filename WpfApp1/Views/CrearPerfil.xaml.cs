@@ -9,7 +9,7 @@ namespace WpfApp1.Views
 {
     public partial class CrearPerfil : Window
     {
-        private Schema _schema;
+        private Profile _schema;
         private List<string> _daysNames = new();
         private List<string> _hoursNames = new();
 
@@ -38,13 +38,13 @@ namespace WpfApp1.Views
         {
             var textBox = sender as TextBox;
 
-            Helper.ValidarTexto(textBox, e, 20);
+            InputValidator.ValidarTexto(textBox, e, 20);
         }
 
         private void XCantidadDiasButton_Click(object sender, RoutedEventArgs e)
         {
             var window = new AddToPerfilWindow(_daysNames, AddToPerfilWindow.AddToPerfilOptions.dias);
-            window.Closed += UpdateButtonsLabel;
+            window.Closing += UpdateButtonsLabel;
             window.ShowDialog();
         }
 
@@ -75,7 +75,7 @@ namespace WpfApp1.Views
         private void XCantidadHorasButton_Click(object sender, RoutedEventArgs e)
         {
             var window = new AddToPerfilWindow(_hoursNames, AddToPerfilWindow.AddToPerfilOptions.horarios);
-            window.Closed += UpdateButtonsLabel;
+            window.Closing += UpdateButtonsLabel;
             window.ShowDialog();
         }
 
@@ -88,8 +88,8 @@ namespace WpfApp1.Views
 
         private void XGuardarButton_Click(object sender, RoutedEventArgs e)
         {
-            var perfil = new Schema(xnombrePerfilTextBox.Text, _daysNames, _hoursNames, new List<string>() { "" });
-            DataManager.schemas.Add(perfil);
+            var perfil = new Profile(xnombrePerfilTextBox.Text, _daysNames, _hoursNames, new List<string>() { "" },new(),new());
+            DataManager.SaveProfile(perfil);
             var window = new SeleccionarPerfilWindow();
             window.Show();
             this.Close();

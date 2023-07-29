@@ -2,21 +2,29 @@
 {
     public class Analyzer
     {
-        private List<Clase> clasesOriginal = new();
+        private List<Clase> clasesOriginal;
         private byte daysAmount;
+        private bool parar = false;
+        private SemanaController _semana;
 
         public Action<byte> OnFinishClass;
         public Action OnFinish;
+        public Action OnCancelled;
+        public CancellationToken Token { get; set; }
 
-        public Analyzer(List<Clase> clases , byte daysAmount)
+        public Analyzer(List<Clase> clases, SemanaController semana)
         {
             clasesOriginal = clases;
-            this.daysAmount = daysAmount;
+            _semana = semana;
+            this.daysAmount = (byte) clases[0].horarios.Count;
         }
 
 
-        public async Task GenerateSemana()
+        public async Task GenerateSemana(CancellationToken token)
         {
+            this.Token = token;
+            token.Register(() => parar= true );
+
              await Task.Run(() => ScheduleFistClass());
         }
 
@@ -42,6 +50,11 @@
                 {
                     for (byte h = clase.cantidadMinima; h <= Math.Min(horasRestantesOg, clase.cantidadMaxima); h++)
                     {
+                        if (Token.IsCancellationRequested)
+                        {
+                            OnCancelled?.Invoke();
+                            return;
+                        }
                         if (horasRestantesOg - h < clase.cantidadMinima && horasRestantesOg - h > 0) continue;
                         if (horariosChecked > horariosDelDia.Count - h) continue;
                         int horasRestantes = horasRestantesOg;
@@ -49,7 +62,7 @@
                         for (int i = 0; i < h; i++)
                         {
                             var horarioChequear = horariosDelDia[horariosChecked + i];
-                            if (!SemanaController.HoraLibre(diaActual, horarioChequear))
+                            if (!_semana.HoraLibre(diaActual, horarioChequear))
                             {
                                 hayEspacio = false;
                                 break;
@@ -59,7 +72,7 @@
                         {
                             for (int j = 0; j < h; j++)
                             {
-                                SemanaController.AddToHorarios(diaActual, clase.id, horariosDelDia[horariosChecked + j]);
+                                _semana.AddToHorarios(diaActual, clase.id, horariosDelDia[horariosChecked + j]);
                                 horasRestantes--;
                             }
                             if (horasRestantes == 0)
@@ -68,18 +81,18 @@
                                 if (id < clasesOriginal.Count)
                                     ScheduleClass(id);
                                 else
-                                    SemanaController.SaveSemana();
+                                    _semana.SaveSemana();
                             }
                             else
                                 ScheduleClassHelper(clase, (byte)horasRestantes, (byte)(diaActual + 1 + clase.diasEntreClases), claseID);
                         }
                         if (horasRestantes == 0)
-                            SemanaController.RemoveLastClase(clase.id);
+                            _semana.RemoveLastClase(clase.id);
                     }
                     horariosChecked++;
                 }
             }
-            SemanaController.RemoveAllClase(clase.id);
+            _semana.RemoveAllClase(clase.id);
             OnFinish?.Invoke();
         }
 
@@ -101,7 +114,7 @@
                         for (int i = 0; i < h; i++)
                         {
                             var horarioChequear = horariosDelDia[horariosChecked + i];
-                            if (!SemanaController.HoraLibre(diaActual, horarioChequear))
+                            if (!_semana.HoraLibre(diaActual, horarioChequear))
                             {
                                 hayEspacio = false;
                                 break;
@@ -111,7 +124,7 @@
                         {
                             for (int j = 0; j < h; j++)
                             {
-                                SemanaController.AddToHorarios(diaActual,clase.id, horariosDelDia[horariosChecked + j]);
+                                _semana.AddToHorarios(diaActual,clase.id, horariosDelDia[horariosChecked + j]);
                                 horasRestantes--;
                             }
                             if (horasRestantes == 0)
@@ -120,18 +133,18 @@
                                 if (id < clasesOriginal.Count)
                                     ScheduleClass(id);
                                 else
-                                    SemanaController.SaveSemana();
+                                    _semana.SaveSemana();
                             }
                             else
                                 ScheduleClassHelper(clase,(byte)horasRestantes, (byte)(diaActual + 1 + clase.diasEntreClases), claseID);
                         }
                         if (horasRestantes == 0)
-                            SemanaController.RemoveLastClase(clase.id); 
+                            _semana.RemoveLastClase(clase.id); 
                     }
                     horariosChecked++;
                 }
             }
-            SemanaController.RemoveAllClase(clase.id);
+            _semana.RemoveAllClase(clase.id);
         }
     }
 }

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="Selecione un Perfil" Height="600" Width="900">
+        Title="Selecione un Perfil" Height="450" Width="600">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width ="20"></ColumnDefinition>
@@ -30,7 +30,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="20" ></RowDefinition>
             <RowDefinition Height="auto" ></RowDefinition>
-            <RowDefinition Height="*" ></RowDefinition>
+            <RowDefinition Height="20" ></RowDefinition>
             <RowDefinition Height="*" ></RowDefinition>
             <RowDefinition Height="auto" ></RowDefinition>
             <RowDefinition Height="*" ></RowDefinition>
@@ -41,13 +41,21 @@
 
         <TextBlock Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="9" FontSize="26" Text="Selecione un perfil" HorizontalAlignment="Center" FontWeight="Bold"> </TextBlock>
 
-        <ComboBox Name="perfilesBox" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Grid.Row="4" Grid.Column="5" MinWidth="300" MinHeight="40"  >
+        <ComboBox Name="perfilesBox" FontSize="16" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Grid.Row="4" Grid.Column="5" MinWidth="250" MinHeight="40"  >
             <ComboBox.Items>
                 <ComboBoxItem Visibility="Collapsed" IsEnabled="False">Seleccione un perfil</ComboBoxItem>
             </ComboBox.Items>
         </ComboBox>
 
-        <Button Name ="crearButton" MaxHeight="50" Content="Crear Perfil" FontSize="16"  Grid.Column="3" Grid.Row="6" Grid.ColumnSpan="2" ></Button>
-        <Button Name ="selecionarButton" MaxHeight="50" Content="Seleccionar" FontSize="16" Grid.Column="6" Grid.ColumnSpan="2" Grid.Row="6" IsEnabled="False" ></Button>
+        <Grid Grid.Row="6" Grid.Column="3" Grid.ColumnSpan="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Button Name ="crearButton" MaxHeight="40" MaxWidth="125" Content="Crear Perfil" FontSize="16"  Grid.Column="0" Grid.Row="6"  ></Button>
+            <Button Name ="selecionarButton" MaxHeight="40" MaxWidth="125" Content="Seleccionar" FontSize="16" Grid.Column="2" IsEnabled="False" ></Button>
+        </Grid>
     </Grid>
 </Window>

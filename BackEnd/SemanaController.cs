@@ -1,73 +1,61 @@
-﻿using System.Globalization;
-using System.Security.Cryptography;
-using System.Text;
+﻿using BackEnd.Conditions;
 
 namespace BackEnd
 {
-    public static class SemanaController
+    public class SemanaController
     {
-        public static List<string> diasNames = new ();
-        public static List<string> materiasNames = new();
-        public static List<string> horariosNames = new ();
-        
-        public static HashSet<string> semanaID = new();
 
-        public static List<List<byte>> semanaGenerandose = new ();
+        public List<List<byte>> semanaGenerandose = new();
+        public HashSet<List<List<byte>>> semanasCorrectas = new();
+        public List<ICondition> conditions = new();
 
-        public static int created;
+        public int maxSemanasDTOs = 1000;
 
-        public static bool metConditions;
-        //public static List<ICondition> conditions = new();
-        public static byte spacing = 11;
+        private byte dias;
+        private byte horarios;
 
-        public static bool buenaHora;
-        public static bool hayEspacio;
-        public const string path = "Semanas/Test";
+        public Action OnSuperoMaximo;
 
-        public static List<byte> combination = new List<byte>();
-
-        public static int maxSemanasDTOs = 1000;
-        public static List<SemanaDTO> semanaDTOs = new(maxSemanasDTOs);
-
-        public static void Initialize(List<string> materias, List<string> horarios, List<string> dias )
+        public SemanaController (int dias, int horarios, FilterConditions condiciones)
         {
-            materiasNames = materias;
-            diasNames = dias;
-            horariosNames = horarios;
-            semanaGenerandose.Clear();
-            foreach ( var dia in dias )
-            {
-                var x = new List<byte>();
+            this.dias = (byte)dias;
+            this.horarios = (byte)horarios;
 
-                foreach ( var horario in horarios )
+            for (var dia = 0; dia <= dias; dia++)       
+            {
+                var horariosVacios = new List<byte>();
+
+                for (var hor = 0; hor<= horarios; hor++)
                 {
-                    x.Add(0);
+                    horariosVacios.Add(0);
                 }
-                semanaGenerandose.Add(x);
+                semanaGenerandose.Add(horariosVacios);
             }
-            //conditions.Add(new NoEspaciosYBuenaHora());
+
+            if (condiciones.noEspacioEntreClases)
+                conditions.Add(new NoHoraLibreCondition());
+
+            if (condiciones.todosLosDiasPrimeraHora)
+                conditions.Add(new PrimeraHoraCondition());
         }
 
-        public static void AddToHorarios(byte diaIndex, byte claseId, byte horarioIndex)
+        public void AddToHorarios(byte diaIndex, byte claseId, byte horarioIndex)
         {
             semanaGenerandose[diaIndex][horarioIndex] = claseId;
         }
 
-        public static bool HoraLibre(byte diasIndex, byte horarioIndex)
+        public bool HoraLibre(byte diasIndex, byte horarioIndex)
         {
-            if (semanaGenerandose[diasIndex][horarioIndex] == 0)
-                return true;
-            else return false;
+            return semanaGenerandose[diasIndex][horarioIndex] == 0;
         }
 
-        public static void RemoveLastClase(byte claseId)
+        public void RemoveLastClase(byte claseId)
         {
             bool found = false;
-            for (int dia = diasNames.Count - 1; dia >= 0; dia--)
+            for (int dia = dias; dia >= 0; dia--)
             {
                 for (int horario = 0; horario < semanaGenerandose[dia].Count; horario++)
                 {
-
                     if (semanaGenerandose[dia][horario] == claseId)
                     {
                         semanaGenerandose[dia][horario] = 0;
@@ -78,9 +66,9 @@ namespace BackEnd
             }
         }
 
-        public static void RemoveAllClase(byte claseId)
+        public void RemoveAllClase(byte claseId)
         {
-            for (int dia = diasNames.Count-1; dia >= 0; dia--)
+            for (int dia = dias; dia >= 0; dia--)
             {
                 for (int horario = 0; horario < semanaGenerandose[dia].Count; horario++)
                 {
@@ -90,105 +78,37 @@ namespace BackEnd
             }
         }
 
-        public static void SaveSemana()
+        public void SaveSemana()
         {
-            semanaDTOs.Add(new SemanaDTO(semanaGenerandose));
-            /*
-            var text = SerializeSemana();
-            var id = GenerateFileId(text);
-
-            AnaliazarSemana();
-
-            if (metConditions)
+            if (SemanaCumpleConCondiciones(semanaGenerandose))
             {
-                if (semanaID.Add(id))
+                if(semanasCorrectas.Count < maxSemanasDTOs)
                 {
-                    SaveSemana(text, id);
+                    var x = new List<List<byte>>();
+                    foreach (var item in semanaGenerandose)
+                    {
+                        var y = new List<byte>();
+                        foreach (var item2 in item)
+                        {
+                            y.Add(item2);
+                        }
+                        x.Add(y);
+                    }
+                    semanasCorrectas.Add(x);
                 }
-            }*/
-        }
-        public static string SerializeSemana()
-        {
-            string result = GetLinea();
-            List<string> header = new() { "Horarios".PadCenter(spacing) };
-            
-            for (int dia = 0; dia < diasNames.Count; dia++)
-            {
-                header.Add(diasNames[dia].PadCenter(spacing));
             }
-
-            result += GetDatos(header);
-            result += GetLinea();
-
-            for (int horario = 0; horario < horariosNames.Count; horario++)
-            {
-                List<string> x = new() { horariosNames[horario].PadCenter(spacing)};
-
-                for (int dia = 0; dia < diasNames.Count; dia++)
-                {
-                    x.Add(materiasNames[semanaGenerandose[dia][horario]].PadCenter(spacing));
-                }
-                result += GetDatos(x);
-                result += GetLinea();
-            }
-            return result;
         }
 
-        private static string GetDatos(List<string> datos)
+        private bool SemanaCumpleConCondiciones(List<List<byte>> semana)
         {
-            string result = "|";
-            for (int i = 0; i < datos.Count; i++)
-            {
-                result += datos[i] + "|";
-            }
-            result += '\n';
-            return result;
-        }
-
-        private static string GetLinea()
-        {
-            return new string('-', spacing * (diasNames.Count+1) + diasNames.Count +2 ) + '\n';
-        }
-
-        private static void AnaliazarSemana()
-        {
-            metConditions = true;
-            /*
             foreach (var condition in conditions)
             {
-                if (!condition.MetCondition())
+                if (!condition.MetCondition(semana))
                 {
-                    metConditions = false;
-                    return;
+                    return false;
                 }
-            }*/
-        }
-        public static string GenerateFileId(string input)
-        {
-            using (SHA256 sha256 = SHA256.Create())
-            {
-                byte[] inputBytes = Encoding.UTF8.GetBytes(input);
-                byte[] hashBytes = sha256.ComputeHash(inputBytes);
-                string stringId = BitConverter.ToString(hashBytes).Replace("-", string.Empty);
-                return stringId;
             }
-        }
-        private static void SaveSemana(string semanaSerializada, string id)
-        {
-            if (!Directory.Exists(path))
-            {
-                Directory.CreateDirectory(path);
-            }
-            semanaDTOs.Add(new SemanaDTO(semanaGenerandose));
-            string pathFile = $"{path}/Semana_{id}.txt";
-            if (!File.Exists(pathFile))
-            {
-                using var writer = new StreamWriter(pathFile);
-                {
-                    writer.Write(semanaSerializada);
-                }
-                created++;
-            }
+            return true;
         }
     }
 }

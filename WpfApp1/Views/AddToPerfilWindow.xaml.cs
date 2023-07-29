@@ -14,7 +14,7 @@ namespace WpfApp1.Views
     public partial class AddToPerfilWindow : Window
     {
 
-        private Schema _schema;
+        private Profile _schema;
         private List<string> _originalList;
         private List<string> _copyList;
         private Stack<BorderItem> _panels = new();
@@ -76,7 +76,7 @@ namespace WpfApp1.Views
                     Title = "Editar Materias";
 
 
-                    foreach (var item in DataManager.currentSchema.clases)
+                    foreach (var item in DataManager.CurrentProfile.clases)
                     {
                         _clasesCopies.Add(new Clase(item.id, item.cantidadHorasSemana, item.cantidadMinima, item.cantidadMaxima,
                             item.diasEntreClases, item.horarios));
@@ -102,7 +102,7 @@ namespace WpfApp1.Views
             _originalList.Clear();
             if (_id == AddToPerfilOptions.materias)
             {
-                DataManager.currentSchema.clases = _clasesCopies;
+                DataManager.CurrentProfile.clases = _clasesCopies;
                 _originalList.Add("");
             }
             foreach (var item in _copyList)
@@ -142,7 +142,7 @@ namespace WpfApp1.Views
         {
             TextBox textBox = (TextBox)sender;
 
-            Helper.ValidarTexto(textBox, e, () => XIngresarNombreButton_Click(this, new RoutedEventArgs()), 14, false);
+            InputValidator.ValidarTexto(textBox, e, () => XIngresarNombreButton_Click(this, new RoutedEventArgs()), 14, false);
         }
 
         private void UpdateScrollView()
@@ -281,8 +281,8 @@ namespace WpfApp1.Views
             downButton.Content = "▼";
             downButton.Tag = id;
             downButton.Click += DownButton_Click;
+            
             xStackPanel.Children.Add(border);
-
             _panels.Push(new BorderItem(border, textBlock, editButton, deleteButton, upButton, downButton));
         }
 

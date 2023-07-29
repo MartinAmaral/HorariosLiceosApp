@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 
 namespace WpfApp1
 {
@@ -16,7 +11,7 @@ namespace WpfApp1
         public Button UpButton { get; set; }
         public Button DownButton { get; set; }
 
-        public BorderItem(Border stackBorder ,TextBlock textBlock, Button editButton ,Button deleteButton, Button upButton, Button downButton)
+        public BorderItem(Border stackBorder, TextBlock textBlock, Button editButton, Button deleteButton, Button upButton, Button downButton)
         {
             Border = stackBorder;
             TextBlock = textBlock;
@@ -24,8 +19,6 @@ namespace WpfApp1
             DeleteButton = deleteButton;
             UpButton = upButton;
             DownButton = downButton;
-
         }
-
     }
 }

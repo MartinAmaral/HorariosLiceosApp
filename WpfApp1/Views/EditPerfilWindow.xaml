@@ -33,7 +33,7 @@
             <RowDefinition Height="auto" ></RowDefinition>
             <RowDefinition Height="auto" ></RowDefinition>
             <RowDefinition Height="auto" ></RowDefinition>
-            <RowDefinition Height="20" ></RowDefinition>
+            <RowDefinition Height="auto" ></RowDefinition>
             <RowDefinition Height="*" ></RowDefinition>
             <RowDefinition Height="*" ></RowDefinition>
             <RowDefinition Height="*" ></RowDefinition>
@@ -51,12 +51,14 @@
         <TextBlock Grid.Column="3" Grid.Row="5" Text="Editar horas"></TextBlock>
         <Button Name="xVerHoras" Grid.Column="6" Grid.Row="5" Content="Ver horas"></Button>
 
-        <TextBlock Grid.Column="3" Grid.Row="6" Grid.ColumnSpan="2" Text="Generar Semanas Posibles:"></TextBlock>
-        <Button Name="xGenerar"  Grid.Column="6" Grid.Row="6" Content="Generar"></Button>
+        <TextBlock Grid.Column="3" Grid.Row="6" Grid.ColumnSpan="2" Text="Editar Condiciones:"></TextBlock>
+        <Button Name="xConditionsButton"  Grid.Column="6" Grid.Row="6" Content="Editar"></Button>
 
-        <TextBlock Grid.Column="3" Grid.Row="7" Grid.ColumnSpan="2" Text="Ver Semanas Posibles:"></TextBlock>
-        <Button Name="xMostrar"  Grid.Column="6" Grid.Row="7" IsEnabled="False" Content="Mostrar"></Button>
+        <TextBlock Grid.Column="3" Grid.Row="7" Grid.ColumnSpan="2" Text="Generar Semanas Posibles:"></TextBlock>
+        <Button Name="xGenerar"  Grid.Column="6" Grid.Row="7" Content="Generar"></Button>
 
+        <TextBlock Grid.Column="3" Grid.Row="8" Grid.ColumnSpan="2" Text="Ver Semanas Posibles:"></TextBlock>
+        <Button Name="xMostrar"  Grid.Column="6" Grid.Row="8" IsEnabled="False" Content="Mostrar"></Button>
 
         <Grid Grid.Row="11" Grid.Column="2" Grid.ColumnSpan="6">
 
@@ -71,9 +73,9 @@
 
 
             </Grid.ColumnDefinitions>
-            <Button Name="xVolver" Grid.Column="1" Grid.Row="0" Content="Volver"></Button>
-            <Button Name="xBorrar" Grid.Column="3" Grid.Row="0" Content="Borrar"></Button>
-            <Button Name="xGuardar" Grid.Column="5" Grid.Row="0" Content="Guardar"></Button>
+            <Button Name="xVolver" Grid.Column="1" Grid.Row="0" MaxHeight="40" MaxWidth="125" Content="Volver"></Button>
+            <Button Name="xBorrar" Grid.Column="3" Grid.Row="0" MaxHeight="40" MaxWidth="125" Content="Borrar"></Button>
+            <Button Name="xGuardar" Grid.Column="5" Grid.Row="0" MaxHeight="40" MaxWidth="125" Content="Guardar"></Button>
 
         </Grid>
 

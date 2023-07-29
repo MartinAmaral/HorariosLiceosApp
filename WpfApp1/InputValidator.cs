@@ -9,7 +9,7 @@ using System.Windows.Input;
 
 namespace WpfApp1
 {
-    public static class Helper
+    public static class InputValidator
     {
         public static void ValidarNumero(TextBox textBox, TextCompositionEventArgs e , int max=26, int min=0)
         {
@@ -50,7 +50,7 @@ namespace WpfApp1
             if (e.Text == "\r")
             {
                 if(clearFocus) Keyboard.ClearFocus();
-                action.Invoke();
+                action?.Invoke();
                 e.Handled = true;
                 return;
             }
@@ -63,6 +63,5 @@ namespace WpfApp1
                 }
             }
         }
-
     }
 }

@@ -15,40 +15,38 @@ namespace WpfApp1
         {
             InitializeComponent();
 
-            if (DataManager.schemas.Count == 0)
+            DataManager.profiles.Clear();
+            DataManager.LoadAllProfiles();
+
+            if (DataManager.profiles.Count == 0)
             {
+                var schema = new Profile("Test", new List<string>() { "Lunes", "Martes", "Miercoles", "Jueves", "Viernes" },
+                    new List<string>() { "7:30-8:10", "8:10-8:50", "9:00-9:40", "9:40-10:20", "10:30-11:10", "11:10-10:50" },
+                    new List<string>(), new(), new());
 
-                DataManager.LoadAllSchemas();
 
-                if (DataManager.schemas.Count == 0)
-                {
-                    var schema = new Schema("Test", new List<string>() { "Lunes", "Martes", "Miercoles", "Jueves", "Viernes" },
-                        new List<string>() { "7:30-8:10", "8:10-8:50", "9:00-9:40", "9:40-10:20", "10:30-11:10", "11:10-10:50" }, new List<string>());
-
-                    schema.clases.Add(new Clase(1, 1, 1, 1, 0, new List<List<byte>>
+                schema.clases.Add(new Clase(1, 1, 1, 1, 0, new List<List<byte>>
                 { new List<byte>() {1 },
                   new List<byte>(),
                   new List<byte>()}));
-                    schema.materiasNames.Add("test1");
+                schema.materiasNames.Add("test1");
 
-                    schema.clases.Add(new Clase(2, 1, 1, 1, 0, new List<List<byte>>
+                schema.clases.Add(new Clase(2, 1, 1, 1, 0, new List<List<byte>>
                 { new List<byte>(),
                   new List<byte>(){1,2 },
                   new List<byte>() }));
-                    schema.materiasNames.Add("test2");
+                schema.materiasNames.Add("test2");
 
-                    DataManager.schemas.Add(schema);
-                }
+                DataManager.SaveProfile(schema);
+                DataManager.LoadAllProfiles();
             }
-
-
 
             perfilesBox.SelectedIndex = 0;
             perfilesBox.SelectionChanged += PerfilesBox_SelectionChanged;
 
-            foreach (var file in DataManager.schemas)
+            foreach (var file in DataManager.profiles)
             {
-                perfilesBox.Items.Add(file.Name);
+                perfilesBox.Items.Add(file.name);
             }
 
             selecionarButton.Click += SelecionarButton_Click;
@@ -65,9 +63,7 @@ namespace WpfApp1
 
         private void SelecionarButton_Click(object sender, RoutedEventArgs e)
         {
-            DataManager.currentSchema = DataManager.schemas[perfilesBox.SelectedIndex - 1];
-
-            DataManager.SaveSchema();
+            DataManager.SetCurrentProfile(DataManager.profiles[perfilesBox.SelectedIndex - 1]);
 
             var window = new EditPerfilWindow(this);
             window.Show();
@@ -76,11 +72,7 @@ namespace WpfApp1
 
         private void PerfilesBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (perfilesBox.SelectedIndex == 0)
-            {
-                selecionarButton.IsEnabled = false;
-            }
-            else selecionarButton.IsEnabled = true;
+            selecionarButton.IsEnabled = perfilesBox.SelectedIndex != 0;
         }
     }
 }
